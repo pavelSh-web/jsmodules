@@ -8,15 +8,32 @@ function scrollTo(elem) {
     });
 }
 
+// скролл к началу страницы 
+
+let scrollTop = document.querySelectorAll('[data-scroll-top]');
+
+scrollTop.forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scroll({
+            left: 0,
+            top: 0,
+            behavior: 'smooth'
+        });
+
+    });
+});
+
 
 //скролл к секциям из ссылок меню
 
-let scrollTriggers = document.querySelectorAll('.header-menu__item');
-scrollTriggers.forEach(item => {
+let scrollTriggers = document.querySelector('[data-scroll-menu]').children;
+
+Array.prototype.forEach.call(scrollTriggers, item => {
     item.addEventListener('click', (e) => {
-        event.preventDefault();
-        const   scrollHash = e.target.hash,
-                scrollElementTo = document.querySelector(scrollHash);
+        e.preventDefault();
+        const scrollHash = e.target.hash,
+            scrollElementTo = document.querySelector(scrollHash);
         scrollTo(scrollElementTo);
     });
 });
@@ -26,11 +43,12 @@ scrollTriggers.forEach(item => {
 
 const scrollNext = document.querySelectorAll('[data-scroll-next]'); // АТРИБУТЫ У ТРИГГЕРОВ!!!!
 const sections = document.querySelectorAll('.page-section'); // секции
+
 scrollNext.forEach(item => {
     item.addEventListener('click', (e) => {
-        event.preventDefault();
-        const   closestSection = e.target.closest('.page-section'), // поиск ближайшей секции с id-указателем
-                thisSectionId = closestSection.id;
+        e.preventDefault();
+        const closestSection = e.target.closest('.page-section'), // поиск ближайшей секции с id-указателем
+            thisSectionId = closestSection.id;
 
         function searchNextSection() {
             for (let i = 0; i < sections.length; i++) {
